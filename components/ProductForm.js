@@ -23,7 +23,6 @@ export default function ProductForm({_id, title: existingTitle, description: exi
         } else {
           await axios.post("/api/products", data);
           setGoBack(true);
-
       }
     }
     if (goBack) {
@@ -31,7 +30,6 @@ export default function ProductForm({_id, title: existingTitle, description: exi
     }
     return (
         <form onSubmit={handleSubmit}>
-          <h1>New Product</h1>
           <label>Product Name</label>
           <input
             type="text"
@@ -45,7 +43,7 @@ export default function ProductForm({_id, title: existingTitle, description: exi
             value={description}
             onChange={(e) => setDescription(e.target.value)}
           />
-          <label>Product Price</label>
+          <label>Price (in USD)</label>
           <input
             type="number"
             placeholder="Product Price"
