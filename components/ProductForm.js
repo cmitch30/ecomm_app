@@ -1,10 +1,10 @@
 import { useState } from "react";
 import { useRouter } from "next/router";
 import axios from "axios";
-import Layout from "@components/Layout";
 
 
-export default function ProductForm({title: existingTitle, description: existingDescription, price: existingPrice}) {
+
+export default function ProductForm({_id, title: existingTitle, description: existingDescription, price: existingPrice}) {
     const [title, setTitle] = useState(existingTitle || '');
     const [description, setDescription] = useState(existingDescription || '');
     const [price, setPrice] = useState(existingPrice || '');
@@ -18,14 +18,18 @@ export default function ProductForm({title: existingTitle, description: existing
         description,
         price,
       };
-      await axios.post("/api/products", data);
-      setGoBack(true);
+      if (_id) {
+      await axios.put('/api/products/', {...data, _id})
+        } else {
+          await axios.post("/api/products", data);
+          setGoBack(true);
+
+      }
     }
     if (goBack) {
       router.push("/products");
     }
     return (
-      <Layout>
         <form onSubmit={handleSubmit}>
           <h1>New Product</h1>
           <label>Product Name</label>
@@ -54,6 +58,5 @@ export default function ProductForm({title: existingTitle, description: existing
             Save
           </button>
         </form>
-      </Layout>
     );
 }
